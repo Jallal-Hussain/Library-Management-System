@@ -2,7 +2,7 @@
 
 A fully client-side demo of a modern library management system built with Next.js App Router, Tailwind CSS (shadcn-style UI), and mock data/auth. This README documents the architecture, setup, development workflows, and key features.
 
-# Screenshots
+## Screenshots
 ![Screenshot](/screenshots/Landing.jpg)
 ![Screenshot](/screenshots/Dashboard.jpg)
 
