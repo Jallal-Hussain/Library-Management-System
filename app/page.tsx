@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/lib/auth-context"
 import { Button } from "@/components/ui/button"
@@ -15,9 +15,15 @@ import { toast } from "sonner"
 
 function LoginPage() {
   const router = useRouter()
-  const { login, register, isLoading } = useAuth()
+  const { login, register, isLoading, isAuthenticated } = useAuth()
   const [loginData, setLoginData] = useState({ email: "", password: "" })
   const [registerData, setRegisterData] = useState({ name: "", email: "", password: "", confirmPassword: "" })
+
+  useEffect(() => {
+    if (!isLoading && isAuthenticated) {
+      router.replace("/dashboard")
+    }
+  }, [isAuthenticated, isLoading, router])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()

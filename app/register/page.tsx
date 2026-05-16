@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { useAuth } from "@/lib/auth-context"
@@ -21,8 +21,14 @@ export default function RegisterPage() {
   const [address, setAddress] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
-  const { register } = useAuth()
+  const { register, isAuthenticated } = useAuth()
   const router = useRouter()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace("/dashboard")
+    }
+  }, [isAuthenticated, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -40,7 +46,13 @@ export default function RegisterPage() {
     setIsLoading(true)
 
     try {
-      await register(email, password, name)
+      await register({
+        name,
+        email,
+        password,
+        phone: phone || undefined,
+        address: address || undefined,
+      })
       toast.success("Account created successfully!")
       router.push("/dashboard")
     } catch {
