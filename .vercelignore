@@ -1,9 +1,0 @@
-.git
-.gitignore
-README.md
-LICENSE
-screenshots/
-node_modules
-frontend/node_modules
-.env.local
-.env.*.local
