@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { AuthProvider, useAuth } from "@/lib/auth-context"
+import { useAuth } from "@/lib/auth-context"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -285,9 +285,5 @@ function LoginPage() {
 }
 
 export default function Home() {
-  return (
-    <AuthProvider>
-      <LoginPage />
-    </AuthProvider>
-  )
+  return <LoginPage />
 }
