@@ -6,6 +6,11 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // Vercel optimizations
+  swcMinify: true,
+  poweredByHeader: false,
+  compress: true,
+  reactStrictMode: true,
 }
 
 export default nextConfig
