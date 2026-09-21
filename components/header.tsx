@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { Bell, Search, LogOut, UserCircle, Shield, Menu } from "lucide-react"
+import { Bell, Search, LogOut, UserCircle, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -17,7 +17,6 @@ import { Badge } from "@/components/ui/badge"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { useAuth } from "@/lib/auth-context"
-import { useSidebar } from "@/lib/sidebar-context"
 import { mockNotifications } from "@/lib/mock-notifications"
 
 interface HeaderProps {
@@ -28,7 +27,6 @@ interface HeaderProps {
 export function Header({ title, subtitle }: HeaderProps) {
   const { user, logout } = useAuth()
   const router = useRouter()
-  const { toggleSidebar } = useSidebar()
   const [searchTerm, setSearchTerm] = useState("")
   const unreadCount = mockNotifications.filter((n) => !n.read).length
   const latestNotifications = mockNotifications.slice(0, 3)
@@ -57,9 +55,6 @@ export function Header({ title, subtitle }: HeaderProps) {
       </div>
 
       <div className="flex items-center gap-2">
-        {/* <Button variant="ghost" size="icon" className="md:hidden" onClick={toggleSidebar}>
-          <Menu className="h-5 w-5" />
-        </Button> */}
 
         {/* Search */}
         <div className="hidden md:block">
@@ -83,7 +78,7 @@ export function Header({ title, subtitle }: HeaderProps) {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="relative">
               <Bell className="h-5 w-5" />
-              <Badge className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 text-xs">
+              <Badge className="absolute right-0 top-0 h-4 w-4 rounded-full p-0 text-xs">
                 {unreadCount}
               </Badge>
             </Button>

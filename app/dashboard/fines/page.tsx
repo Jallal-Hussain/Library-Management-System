@@ -141,7 +141,7 @@ export default function FinesPage() {
 
       <div className="p-6">
         {/* Stats */}
-        <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mb-4 grid gap-1 sm:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardContent className="flex items-center gap-4 p-4">
               <div className="rounded-lg bg-red-100 p-3">
@@ -189,7 +189,7 @@ export default function FinesPage() {
         </div>
 
         {/* Filters */}
-        <Card className="mb-6">
+        <Card className="mb-4">
           <CardContent className="p-4">
             <div className="flex flex-wrap items-center gap-4">
               <div className="relative flex-1 min-w-50">
@@ -217,7 +217,7 @@ export default function FinesPage() {
 
         {/* Fines Table */}
         <Card>
-          <CardHeader>
+          <CardHeader className="mt-2 gap-1">
             <CardTitle>Fine Records</CardTitle>
             <CardDescription>View and process outstanding fines</CardDescription>
           </CardHeader>

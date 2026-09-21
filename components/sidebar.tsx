@@ -118,16 +118,16 @@ export function Sidebar() {
                       <>
                         <span>{item.label}</span>
                         {item.badge && pendingCount > 0 && (
-                          <Badge className="ml-1 h-5 min-w-5 rounded-full bg-red-500 text-white text-xs px-1.5">
+                          <span className="flex items-center justify-center h-5 min-w-5 rounded-full bg-red-500 text-white text-xs">
                             {pendingCount}
-                          </Badge>
+                          </span>
                         )}
                       </>
                     )}
                     {isCollapsed && item.badge && pendingCount > 0 && (
-                      <Badge className="absolute -right-1 -top-1 h-4 w-4 rounded-full bg-red-500 text-white text-xs p-0 flex items-center justify-center">
+                      <span className="absolute right-0 top-0 h-4 min-w-4 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">
                         {pendingCount}
-                      </Badge>
+                      </span>
                     )}
                   </Link>
                 )

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Upload, FileText, AlertCircle, CheckCircle, X, Loader2 } from "lucide-react"
+import { Upload, FileText, AlertCircle, CheckCircle, X, Loader2, CircleX } from "lucide-react"
 import {
   Dialog,
   DialogContent,
@@ -102,7 +102,7 @@ export function BatchImportDialog({ open, onOpenChange, onImport }: BatchImportD
           {/* File Upload */}
           <div className="space-y-2">
             <Label>Upload CSV File</Label>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
               <div className="relative flex-1">
                 <input
                   type="file"
@@ -139,7 +139,7 @@ export function BatchImportDialog({ open, onOpenChange, onImport }: BatchImportD
               value={csvText}
               onChange={(e) => setCsvText(e.target.value)}
               placeholder="Paste CSV data here or upload a file..."
-              className="w-full min-h-37.5 p-3 border rounded-md font-mono text-sm"
+              className="w-full min-h-37.5 p-3 border rounded-sm font-mono text-sm"
             />
           </div>
 
@@ -147,7 +147,7 @@ export function BatchImportDialog({ open, onOpenChange, onImport }: BatchImportD
           <Card>
             <CardHeader>
               <CardTitle className="text-sm">CSV Template</CardTitle>
-              <CardDescription className="text-xs">
+              <CardDescription className="text-xs text-justify">
                 Your CSV should include these columns: title, author, isbn (required), category, genre, publisher,
                 publishYear, description, totalCopies, location, deweyClassification, keywords
               </CardDescription>
@@ -170,34 +170,34 @@ export function BatchImportDialog({ open, onOpenChange, onImport }: BatchImportD
           {importResult && (
             <div className="space-y-4">
               {/* Summary */}
-              <div className="grid grid-cols-3 gap-4">
-                <Card>
+              <div className="grid grid-cols-3 gap-1">
+                <Card className="py-0">
                   <CardContent className="p-4">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="h-5 w-5 text-green-600" />
-                      <div>
+                    <div className="flex items-center gap-4">
+                      <CheckCircle className="h-10 w-10 text-green-600 bg-green-200 p-2 rounded-sm" />
+                      <div className="flex flex-col justify-baseline items-start">
                         <p className="text-2xl font-bold">{importResult.books.length}</p>
                         <p className="text-sm text-muted-foreground">Valid Books</p>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
-                <Card>
+                <Card className="py-0">
                   <CardContent className="p-4">
-                    <div className="flex items-center gap-2">
-                      <AlertCircle className="h-5 w-5 text-red-600" />
-                      <div>
+                    <div className="flex items-center gap-4">
+                      <CircleX className="h-10 w-10 text-red-600 bg-red-200 p-2 rounded-sm" />
+                      <div className="flex flex-col justify-baseline items-start">
                         <p className="text-2xl font-bold">{importResult.errors.length}</p>
                         <p className="text-sm text-muted-foreground">Errors</p>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
-                <Card>
+                <Card className="py-0">
                   <CardContent className="p-4">
-                    <div className="flex items-center gap-2">
-                      <AlertCircle className="h-5 w-5 text-amber-600" />
-                      <div>
+                    <div className="flex items-center gap-4">
+                      <AlertCircle className="h-10 w-10 text-amber-600 bg-amber-200 p-2 rounded-sm" />
+                      <div className="flex flex-col justify-baseline items-start">
                         <p className="text-2xl font-bold">{importResult.warnings.length}</p>
                         <p className="text-sm text-muted-foreground">Warnings</p>
                       </div>
