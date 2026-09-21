@@ -102,7 +102,7 @@ export function AddBookDialog({ open, onOpenChange, onSubmit, editBook }: AddBoo
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-150">
         <DialogHeader>
           <DialogTitle>{editBook ? "Edit Book" : "Add New Book"}</DialogTitle>
           <DialogDescription>

@@ -83,7 +83,7 @@ export function KeywordInput({ keywords, onChange, suggestions = defaultSuggesti
 
   return (
     <div className="space-y-2">
-      <div className="flex flex-wrap gap-2 min-h-[42px] p-2 border rounded-md bg-background">
+      <div className="flex flex-wrap gap-2 min-h-10.5 p-2 border rounded-md bg-background">
         {keywords.map((keyword) => (
           <Badge key={keyword} variant="secondary" className="flex items-center gap-1 pr-1">
             {keyword}
@@ -104,10 +104,10 @@ export function KeywordInput({ keywords, onChange, suggestions = defaultSuggesti
               onKeyDown={handleKeyDown}
               onFocus={() => setOpen(true)}
               placeholder={keywords.length === 0 ? placeholder : ""}
-              className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 h-auto min-w-[150px] flex-1"
+              className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 h-auto min-w-37.5 flex-1"
             />
           </PopoverTrigger>
-          <PopoverContent className="w-[300px] p-0" align="start">
+          <PopoverContent className="w-75 p-0" align="start">
             <Command>
               <CommandInput placeholder="Search keywords..." value={inputValue} />
               <CommandList>

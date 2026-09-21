@@ -63,7 +63,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#EAEBED] via-white to-[#A0E1EB]/20 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-br from-[#EAEBED] via-white to-[#A0E1EB]/20 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <Link
           href="/"
@@ -75,7 +75,7 @@ export default function RegisterPage() {
 
         <Card className="border-0 shadow-xl">
           <CardHeader className="space-y-1 text-center">
-            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#004E66] to-[#007090]">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-linear-to-br from-[#004E66] to-[#007090]">
               <BookOpen className="h-7 w-7 text-white" />
             </div>
             <CardTitle className="text-2xl font-bold text-[#004E66]">Create an Account</CardTitle>

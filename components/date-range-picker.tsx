@@ -56,7 +56,7 @@ export function DateRangePicker({ value, onChange, className }: DateRangePickerP
       <div className="flex items-center gap-2">
         <CalendarRange className="h-4 w-4 text-muted-foreground" />
         <Select value={value.preset} onValueChange={handlePresetChange}>
-          <SelectTrigger className="w-[170px]">
+          <SelectTrigger className="w-42.5">
             <SelectValue placeholder="Date range" />
           </SelectTrigger>
           <SelectContent>

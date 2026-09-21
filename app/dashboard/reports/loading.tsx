@@ -30,7 +30,7 @@ export default function ReportsLoading() {
               <Skeleton className="h-6 w-48" />
             </CardHeader>
             <CardContent>
-              <Skeleton className="h-[300px] w-full" />
+              <Skeleton className="h-75 w-full" />
             </CardContent>
           </Card>
           <Card>
@@ -38,7 +38,7 @@ export default function ReportsLoading() {
               <Skeleton className="h-6 w-48" />
             </CardHeader>
             <CardContent>
-              <Skeleton className="h-[300px] w-full" />
+              <Skeleton className="h-75 w-full" />
             </CardContent>
           </Card>
         </div>

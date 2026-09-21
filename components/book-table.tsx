@@ -41,14 +41,14 @@ export function BookTable({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[300px]">Book</TableHead>
+            <TableHead className="w-75">Book</TableHead>
             <TableHead>ISBN</TableHead>
             <TableHead>Category</TableHead>
             <TableHead>Keywords</TableHead>
             <TableHead>Location</TableHead>
             <TableHead className="text-center">Availability</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead className="w-[70px]"></TableHead>
+            <TableHead className="w-17.5"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

@@ -220,7 +220,7 @@ export default function VendorsPage() {
         <Card className="mb-6">
           <CardContent className="p-4">
             <div className="flex flex-wrap items-center gap-4">
-              <div className="relative flex-1 min-w-[200px]">
+              <div className="relative flex-1 min-w-50">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   placeholder="Search vendors..."
@@ -248,13 +248,13 @@ export default function VendorsPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[200px]">Vendor</TableHead>
+                <TableHead className="w-50">Vendor</TableHead>
                 <TableHead>Contact</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Phone</TableHead>
                 <TableHead className="text-center">Orders</TableHead>
                 <TableHead>Status</TableHead>
-                <TableHead className="w-[70px]"></TableHead>
+                <TableHead className="w-17.5"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -344,7 +344,7 @@ export default function VendorsPage() {
 
       {/* Add/Edit Vendor Dialog */}
       <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-        <DialogContent className="sm:max-w-[500px]">
+        <DialogContent className="sm:max-w-125">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Building2 className="h-5 w-5" />

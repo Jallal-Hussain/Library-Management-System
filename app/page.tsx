@@ -63,7 +63,7 @@ function LoginPage() {
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#004E66] via-[#007090] to-[#01A7C2]" />
+        <div className="absolute inset-0 bg-linear-to-br from-[#004E66] via-[#007090] to-[#01A7C2]" />
         <div className="absolute inset-0 bg-[url('/library-books-pattern.jpg')] opacity-10" />
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">

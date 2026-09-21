@@ -192,7 +192,7 @@ export default function FinesPage() {
         <Card className="mb-6">
           <CardContent className="p-4">
             <div className="flex flex-wrap items-center gap-4">
-              <div className="relative flex-1 min-w-[200px]">
+              <div className="relative flex-1 min-w-50">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   placeholder="Search by member or book..."
@@ -202,7 +202,7 @@ export default function FinesPage() {
                 />
               </div>
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-[150px]">
+                <SelectTrigger className="w-37.5">
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -225,13 +225,13 @@ export default function FinesPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[200px]">Member</TableHead>
+                  <TableHead className="w-50">Member</TableHead>
                   <TableHead>Book</TableHead>
                   <TableHead>Reason</TableHead>
                   <TableHead>Date Issued</TableHead>
                   <TableHead className="text-right">Amount</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead className="w-[100px]"></TableHead>
+                  <TableHead className="w-25"></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

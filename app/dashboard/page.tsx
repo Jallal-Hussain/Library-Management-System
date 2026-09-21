@@ -292,7 +292,7 @@ export default function DashboardPage() {
         {/* Quick Stats for Admin */}
         {isAdmin && (
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <Card className="bg-gradient-to-br from-[#004E66] to-[#007090] text-white">
+            <Card className="bg-linear-to-br from-[#004E66] to-[#007090] text-white">
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <BookMarked className="h-8 w-8 opacity-80" />
@@ -303,7 +303,7 @@ export default function DashboardPage() {
                 </div>
               </CardContent>
             </Card>
-            <Card className="bg-gradient-to-br from-[#007090] to-[#01A7C2] text-white">
+            <Card className="bg-linear-to-br from-[#007090] to-[#01A7C2] text-white">
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <DollarSign className="h-8 w-8 opacity-80" />
@@ -314,7 +314,7 @@ export default function DashboardPage() {
                 </div>
               </CardContent>
             </Card>
-            <Card className="bg-gradient-to-br from-[#01A7C2] to-[#A0E1EB] text-[#004E66]">
+            <Card className="bg-linear-to-br from-[#01A7C2] to-[#A0E1EB] text-[#004E66]">
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <Users className="h-8 w-8 opacity-80" />
@@ -325,7 +325,7 @@ export default function DashboardPage() {
                 </div>
               </CardContent>
             </Card>
-            <Card className="bg-gradient-to-br from-[#A0E1EB] to-[#EAEBED] text-[#004E66]">
+            <Card className="bg-linear-to-br from-[#A0E1EB] to-[#EAEBED] text-[#004E66]">
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <BookOpen className="h-8 w-8 opacity-80" />

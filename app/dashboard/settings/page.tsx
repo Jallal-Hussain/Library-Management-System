@@ -156,7 +156,7 @@ export default function SettingsPage() {
 
       <div className="p-6">
         <Tabs defaultValue="library" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6 lg:w-[800px]">
+          <TabsList className="grid w-full grid-cols-6 lg:w-200">
             <TabsTrigger value="library" className="gap-2">
               <Library className="h-4 w-4" />
               Library

@@ -226,7 +226,7 @@ export function VendorQuoteComparison({
                             )}
                           </div>
                         </TableCell>
-                        <TableCell className="max-w-[200px] truncate">{quote.terms}</TableCell>
+                        <TableCell className="max-w-50 truncate">{quote.terms}</TableCell>
                         <TableCell>{new Date(quote.validUntil).toLocaleDateString()}</TableCell>
                         <TableCell>
                           <Badge

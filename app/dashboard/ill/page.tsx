@@ -140,13 +140,13 @@ export default function ILLPage() {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[250px]">Book</TableHead>
+          <TableHead className="w-62.5">Book</TableHead>
           <TableHead>Partner Library</TableHead>
           {type === "outgoing" && <TableHead>Patron</TableHead>}
           <TableHead>Request Date</TableHead>
           <TableHead>Due Date</TableHead>
           <TableHead>Status</TableHead>
-          <TableHead className="w-[70px]"></TableHead>
+          <TableHead className="w-17.5"></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -274,7 +274,7 @@ export default function ILLPage() {
         <Card className="mb-6">
           <CardContent className="p-4">
             <div className="flex flex-wrap items-center gap-4">
-              <div className="relative flex-1 min-w-[200px]">
+              <div className="relative flex-1 min-w-50">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   placeholder="Search by book or library..."
@@ -320,7 +320,7 @@ export default function ILLPage() {
 
       {/* New Request Dialog */}
       <Dialog open={isRequestDialogOpen} onOpenChange={setIsRequestDialogOpen}>
-        <DialogContent className="sm:max-w-[500px]">
+        <DialogContent className="sm:max-w-125">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Building2 className="h-5 w-5" />

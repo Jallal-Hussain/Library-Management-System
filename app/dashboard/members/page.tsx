@@ -98,7 +98,7 @@ export default function MembersPage() {
         <Card className="mb-6">
           <CardContent className="p-4">
             <div className="flex flex-wrap items-center gap-4">
-              <div className="relative flex-1 min-w-[200px]">
+              <div className="relative flex-1 min-w-50">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   placeholder="Search by name, email, or ID..."
@@ -109,7 +109,7 @@ export default function MembersPage() {
               </div>
 
               <Select value={roleFilter} onValueChange={setRoleFilter}>
-                <SelectTrigger className="w-[150px]">
+                <SelectTrigger className="w-37.5">
                   <Filter className="mr-2 h-4 w-4" />
                   <SelectValue placeholder="Role" />
                 </SelectTrigger>
@@ -122,7 +122,7 @@ export default function MembersPage() {
               </Select>
 
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-[150px]">
+                <SelectTrigger className="w-37.5">
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -133,7 +133,7 @@ export default function MembersPage() {
               </Select>
 
               <Select value={approvalFilter} onValueChange={setApprovalFilter}>
-                <SelectTrigger className="w-[150px]">
+                <SelectTrigger className="w-37.5">
                   <SelectValue placeholder="Approval" />
                 </SelectTrigger>
                 <SelectContent>
@@ -168,14 +168,14 @@ export default function MembersPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[300px]">Member</TableHead>
+                <TableHead className="w-75">Member</TableHead>
                 <TableHead>ID</TableHead>
                 <TableHead>Role</TableHead>
                 <TableHead>Expiry</TableHead>
                 <TableHead className="text-center">Borrowed</TableHead>
                 <TableHead className="text-right">Fines</TableHead>
                 <TableHead>Status</TableHead>
-                <TableHead className="w-[70px]"></TableHead>
+                <TableHead className="w-17.5"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

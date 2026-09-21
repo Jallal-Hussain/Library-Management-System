@@ -121,7 +121,7 @@ export default function ReservationsPage() {
         <Card className="mb-6">
           <CardContent className="p-4">
             <div className="flex flex-wrap items-center gap-4">
-              <div className="relative flex-1 min-w-[200px]">
+              <div className="relative flex-1 min-w-50">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   placeholder="Search by book or member..."
@@ -131,7 +131,7 @@ export default function ReservationsPage() {
                 />
               </div>
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-[150px]">
+                <SelectTrigger className="w-37.5">
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -152,12 +152,12 @@ export default function ReservationsPage() {
             <TableHeader>
               <TableRow>
                 <TableHead>Queue</TableHead>
-                <TableHead className="w-[250px]">Book</TableHead>
+                <TableHead className="w-62.5">Book</TableHead>
                 <TableHead>Member</TableHead>
                 <TableHead>Reserve Date</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Notified</TableHead>
-                <TableHead className="w-[70px]"></TableHead>
+                <TableHead className="w-17.5"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
