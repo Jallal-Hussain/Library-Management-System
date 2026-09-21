@@ -128,7 +128,7 @@ export default function CatalogPage() {
         <Card className="mb-6">
           <CardContent className="p-4">
             <div className="flex flex-wrap items-center gap-4">
-              <div className="relative flex-1 min-w-[200px]">
+              <div className="relative flex-1 min-w-50">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   placeholder="Search by title, author, or ISBN..."
@@ -138,7 +138,7 @@ export default function CatalogPage() {
                 />
               </div>
               <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-45">
                   <Filter className="mr-2 h-4 w-4" />
                   <SelectValue placeholder="Category" />
                 </SelectTrigger>
@@ -165,7 +165,7 @@ export default function CatalogPage() {
         </p>
 
         {/* Books Grid */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filteredBooks.map((book) => (
             <BookCard
               key={book.id}

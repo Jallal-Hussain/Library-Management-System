@@ -139,7 +139,7 @@ export function BatchImportDialog({ open, onOpenChange, onImport }: BatchImportD
               value={csvText}
               onChange={(e) => setCsvText(e.target.value)}
               placeholder="Paste CSV data here or upload a file..."
-              className="w-full min-h-[150px] p-3 border rounded-md font-mono text-sm"
+              className="w-full min-h-37.5 p-3 border rounded-md font-mono text-sm"
             />
           </div>
 
@@ -253,7 +253,7 @@ export function BatchImportDialog({ open, onOpenChange, onImport }: BatchImportD
                     <CardTitle className="text-sm">Preview ({importResult.books.length} books)</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="max-h-[300px] overflow-y-auto">
+                    <div className="max-h-75 overflow-y-auto">
                       <Table>
                         <TableHeader>
                           <TableRow>

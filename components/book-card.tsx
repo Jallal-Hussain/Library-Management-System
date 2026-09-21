@@ -31,7 +31,7 @@ export function BookCard({ book, onView, onBorrow, showActions = true, compact =
     return (
       <Card className="overflow-hidden transition-shadow hover:shadow-md">
         <CardContent className="flex gap-4 p-4">
-          <div className="relative h-20 w-14 flex-shrink-0 overflow-hidden rounded">
+          <div className="relative h-20 w-14 shrink-0 overflow-hidden rounded">
             <Image
               src={book.coverImage || "/placeholder.svg?height=80&width=56&query=book cover"}
               alt={book.title}
@@ -56,8 +56,8 @@ export function BookCard({ book, onView, onBorrow, showActions = true, compact =
   }
 
   return (
-    <Card className="overflow-hidden transition-shadow hover:shadow-lg">
-      <div className="relative aspect-[7/8] w-full overflow-hidden bg-muted">
+    <Card className="p-0 overflow-hidden transition-shadow hover:shadow-lg">
+      <div className="relative aspect-7/8 w-full overflow-hidden bg-muted">
         <Image
           src={book.coverImage || "/placeholder.svg?height=300&width=200&query=book cover"}
           alt={book.title}
@@ -115,7 +115,7 @@ export function BookCard({ book, onView, onBorrow, showActions = true, compact =
               </Button>
             </Link>
             <Button size="sm" className="flex-1" disabled={book.availableCopies === 0} onClick={() => onBorrow?.(book)}>
-              {book.availableCopies === 0 ? "Reserve" : "Borrow"}
+              {book.availableCopies === 0 ? "Reserved" : "Borrow"}
             </Button>
           </div>
         )}

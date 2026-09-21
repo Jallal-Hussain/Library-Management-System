@@ -105,7 +105,7 @@ export default function BookDetailPage() {
           <div className="space-y-4">
             <Card>
               <CardContent className="p-4">
-                <div className="relative aspect-[7/8] w-full overflow-hidden rounded-lg bg-muted">
+                <div className="relative aspect-7/8 w-full overflow-hidden rounded-lg bg-muted">
                   <Image
                     src={book.coverImage || "/placeholder.svg?height=400&width=300&query=book cover"}
                     alt={book.title}
