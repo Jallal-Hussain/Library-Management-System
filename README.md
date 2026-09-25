@@ -174,8 +174,7 @@ npm run lint
 
 If you want to make the repository easier for new contributors to manage, the next useful root-level additions would be:
 
-1. A root-level .gitignore for generated files and shared workspace artifacts
-2. A root-level .env.example if you want a single environment template for the entire monorepo
-3. A root-level setup script or Makefile for launching both apps together
+1. A root-level .env.example if you want a single environment template for the entire monorepo
+2. A root-level setup script or Makefile for launching both apps together
 
 These are optional and should be added only if they fit your deployment and team workflow.
