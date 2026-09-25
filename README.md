@@ -106,9 +106,6 @@ Then update values like:
 - `JWT_EXPIRES_IN`
 - `CLIENT_URL`
 
-### Frontend
-The frontend project is built around local/mock data and does not require a root environment file for normal demo usage. If you later add real APIs, create your own environment variables inside the frontend app as needed.
-
 ## Local setup
 
 ### 1) Install backend dependencies
