@@ -21,7 +21,11 @@ import reportRoutes     from "./routes/report.routes.js";
 import notificationRoutes from "./routes/notification.routes.js";
 import settingsRoutes   from "./routes/settings.routes.js";
 import branchRoutes     from "./routes/branch.routes.js";
-import illRoutes        from "./routes/ill.routes.js";
+import illRoutes           from "./routes/ill.routes.js";
+// ── Phase 1: Orphaned Models ──────────────────────────────────────────────────
+import feeStructureRoutes  from "./routes/feeStructure.routes.js";
+import budgetRoutes        from "./routes/budget.routes.js";
+import vendorQuoteRoutes   from "./routes/vendorQuote.routes.js";
 
 const app = express();
 
@@ -74,7 +78,11 @@ app.use("/api/reports",      reportRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/settings",     settingsRoutes);
 app.use("/api/branches",     branchRoutes);
-app.use("/api/ill",          illRoutes);
+app.use("/api/ill",           illRoutes);
+// ── Phase 1: Orphaned Models ──────────────────────────────────────────────────
+app.use("/api/fee-structures", feeStructureRoutes);
+app.use("/api/budgets",        budgetRoutes);
+app.use("/api/vendor-quotes",  vendorQuoteRoutes);
 
 // ── 404 Handler ───────────────────────────────────────────────────────────────
 app.use((req, res) => {
