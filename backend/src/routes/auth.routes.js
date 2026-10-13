@@ -10,6 +10,7 @@ import {
   resetPassword,
 } from "../controllers/auth.controller.js";
 import { protect } from "../middleware/auth.js";
+import { authLimiter } from "../middleware/rateLimiter.js";
 import validate from "../middleware/validate.js";
 
 const router = Router();
@@ -86,10 +87,10 @@ const resetPasswordRules = [
 // ── Routes ────────────────────────────────────────────────────────────────────
 
 // Public
-router.post("/register",              registerRules,       validate, register);
-router.post("/login",                 loginRules,          validate, login);
-router.post("/forgot-password",       forgotPasswordRules, validate, forgotPassword);
-router.post("/reset-password/:token", resetPasswordRules,  validate, resetPassword);
+router.post("/register",              authLimiter, registerRules,       validate, register);
+router.post("/login",                 authLimiter, loginRules,          validate, login);
+router.post("/forgot-password",       authLimiter, forgotPasswordRules, validate, forgotPassword);
+router.post("/reset-password/:token", authLimiter, resetPasswordRules,  validate, resetPassword);
 
 // Protected
 router.get ("/me",              protect, getMe);

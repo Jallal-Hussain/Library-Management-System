@@ -23,9 +23,19 @@ const createRules = [
   body("notes").optional().trim().isLength({ max: 500 }),
 ];
 
+const listQueryRules = [
+  query("page").optional().isInt({ min: 1 }).withMessage("Page must be a positive integer"),
+  query("limit").optional().isInt({ min: 1, max: 100 }).withMessage("Limit must be between 1 and 100"),
+  query("paymentStatus")
+    .optional()
+    .isIn(["pending", "paid", "overdue", "cancelled"])
+    .withMessage("Invalid paymentStatus value"),
+  query("vendorId").optional().isMongoId().withMessage("Invalid vendor ID"),
+];
+
 router.use(protect, authorize("admin", "librarian"));
 
-router.get("/", validate, getInvoices);
+router.get("/", listQueryRules, validate, getInvoices);
 router.get("/:id", idParam, validate, getInvoiceById);
 
 router.post("/", createRules, validate, createInvoice);

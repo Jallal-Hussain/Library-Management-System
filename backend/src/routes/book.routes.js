@@ -7,8 +7,11 @@ import {
   updateBook,
   deleteBook,
   getCategories,
+  uploadBookCover,
+  deleteBookCover,
 } from "../controllers/book.controller.js";
 import { protect, authorize } from "../middleware/auth.js";
+import upload from "../middleware/upload.js";
 import validate from "../middleware/validate.js";
 
 const router = Router();
@@ -118,6 +121,26 @@ router.delete(
   idParam,
   validate,
   deleteBook,
+);
+
+// ── Cover Image Cloud Upload & Delete (ImageKit) ───────────────────────────
+router.post(
+  "/:id/cover",
+  protect,
+  authorize("admin", "librarian"),
+  idParam,
+  validate,
+  upload.single("cover"),
+  uploadBookCover,
+);
+
+router.delete(
+  "/:id/cover",
+  protect,
+  authorize("admin", "librarian"),
+  idParam,
+  validate,
+  deleteBookCover,
 );
 
 export default router;

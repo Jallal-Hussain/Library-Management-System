@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import errorHandler from "./middleware/errorHandler.js";
+import { apiLimiter } from "./middleware/rateLimiter.js";
 
 // ── Route Imports ─────────────────────────────────────────────────────────────
 import healthRoutes from "./routes/health.routes.js";
@@ -60,6 +61,11 @@ app.use(express.urlencoded({ extended: true }));
 // ── HTTP Request Logger ───────────────────────────────────────────────────────
 if (process.env.NODE_ENV !== "test") {
   app.use(morgan("dev"));
+}
+
+// ── Rate Limiting ─────────────────────────────────────────────────────────────
+if (process.env.NODE_ENV !== "test") {
+  app.use("/api", apiLimiter);
 }
 
 // ── API Routes ────────────────────────────────────────────────────────────────

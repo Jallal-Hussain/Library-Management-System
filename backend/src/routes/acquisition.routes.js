@@ -25,9 +25,19 @@ const createRules = [
   body("notes").optional().trim().isLength({ max: 500 }),
 ];
 
+const listQueryRules = [
+  query("page").optional().isInt({ min: 1 }).withMessage("Page must be a positive integer"),
+  query("limit").optional().isInt({ min: 1, max: 100 }).withMessage("Limit must be between 1 and 100"),
+  query("status")
+    .optional()
+    .isIn(["requested", "approved", "ordered", "received", "cancelled"])
+    .withMessage("Invalid status value"),
+  query("vendorId").optional().isMongoId().withMessage("Invalid vendor ID"),
+];
+
 router.use(protect, authorize("admin", "librarian"));
 
-router.get("/", validate, getAcquisitions);
+router.get("/", listQueryRules, validate, getAcquisitions);
 router.get("/:id", idParam, validate, getAcquisitionById);
 
 router.post("/", createRules, validate, createAcquisition);

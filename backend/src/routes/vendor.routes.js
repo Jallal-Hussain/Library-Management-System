@@ -26,9 +26,16 @@ const vendorRules = [
   body("isActive").optional().isBoolean(),
 ];
 
+const listQueryRules = [
+  query("page").optional().isInt({ min: 1 }).withMessage("Page must be a positive integer"),
+  query("limit").optional().isInt({ min: 1, max: 100 }).withMessage("Limit must be between 1 and 100"),
+  query("isActive").optional().isBoolean().withMessage("isActive must be a boolean"),
+  query("q").optional().trim().isLength({ max: 100 }),
+];
+
 router.use(protect, authorize("admin", "librarian"));
 
-router.get("/", validate, getVendors);
+router.get("/", listQueryRules, validate, getVendors);
 router.get("/:id", idParam, validate, getVendorById);
 router.post("/", vendorRules, validate, createVendor);
 router.put("/:id", [idParam, ...vendorRules.map(r => r.optional())], validate, updateVendor);

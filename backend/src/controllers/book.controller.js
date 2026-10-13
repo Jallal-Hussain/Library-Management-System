@@ -1,4 +1,5 @@
 import Book from "../models/Book.js";
+import imagekit, { isImageKitConfigured } from "../config/imagekit.js";
 import { sendSuccess, createError } from "../utils/apiResponse.js";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -204,6 +205,84 @@ export const deleteBook = async (req, res, next) => {
     await book.save();
 
     return sendSuccess(res, 200, "Book deleted successfully.");
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /api/books/:id/cover   (admin | librarian only)
+// ─────────────────────────────────────────────────────────────────────────────
+export const uploadBookCover = async (req, res, next) => {
+  try {
+    const book = await Book.findOne({ _id: req.params.id, isActive: true });
+    if (!book) return next(createError("Book not found.", 404));
+
+    if (!req.file) {
+      return next(createError("Please select an image file to upload.", 400));
+    }
+
+    if (!isImageKitConfigured()) {
+      return next(
+        createError(
+          "ImageKit storage is not configured. Please configure IMAGEKIT_PUBLIC_KEY, IMAGEKIT_PRIVATE_KEY, and IMAGEKIT_URL_ENDPOINT in your environment.",
+          503
+        )
+      );
+    }
+
+    // Clean up previous image in ImageKit if one exists
+    if (book.coverImageFileId) {
+      try {
+        await imagekit.deleteFile(book.coverImageFileId);
+      } catch (delErr) {
+        console.warn(`Failed to delete previous ImageKit asset ${book.coverImageFileId}:`, delErr.message);
+      }
+    }
+
+    // Upload to ImageKit cloud storage
+    const response = await imagekit.upload({
+      file: req.file.buffer.toString("base64"),
+      fileName: `book_cover_${book._id}_${Date.now()}`,
+      folder: "/library-management/book-covers",
+      useUniqueFileName: true,
+    });
+
+    book.coverImage = response.url;
+    book.coverImageFileId = response.fileId;
+    await book.save();
+
+    return sendSuccess(res, 200, "Book cover uploaded successfully.", {
+      coverImage: book.coverImage,
+      coverImageFileId: book.coverImageFileId,
+      book,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DELETE /api/books/:id/cover   (admin | librarian only)
+// ─────────────────────────────────────────────────────────────────────────────
+export const deleteBookCover = async (req, res, next) => {
+  try {
+    const book = await Book.findOne({ _id: req.params.id, isActive: true });
+    if (!book) return next(createError("Book not found.", 404));
+
+    if (book.coverImageFileId) {
+      try {
+        await imagekit.deleteFile(book.coverImageFileId);
+      } catch (delErr) {
+        console.warn(`Failed to delete ImageKit asset ${book.coverImageFileId}:`, delErr.message);
+      }
+    }
+
+    book.coverImage = undefined;
+    book.coverImageFileId = undefined;
+    await book.save();
+
+    return sendSuccess(res, 200, "Book cover removed successfully.", book);
   } catch (err) {
     next(err);
   }

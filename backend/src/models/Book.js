@@ -47,6 +47,10 @@ const bookSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    coverImageFileId: {
+      type: String,
+      trim: true,
+    },
     totalCopies: {
       type: Number,
       required: [true, "Total copies is required"],
