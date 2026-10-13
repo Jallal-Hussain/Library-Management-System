@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 import User from "../models/User.js";
 import Notification from "../models/Notification.js";
 import { sendSuccess, createError } from "../utils/apiResponse.js";
@@ -42,6 +43,9 @@ export const register = async (req, res, next) => {
       isActive: false,
       approvalStatus: "pending",
     });
+
+    // Auto-generate membership ID upon registration (Phase 5.1)
+    user.membershipId = user.generateMembershipId();
 
     await user.save();
 
@@ -149,6 +153,100 @@ export const changePassword = async (req, res, next) => {
     await user.save();
 
     return sendSuccess(res, 200, "Password changed successfully.");
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /api/auth/forgot-password  (public)
+// ─────────────────────────────────────────────────────────────────────────────
+export const forgotPassword = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return next(createError("Please provide an email address.", 400));
+    }
+
+    const user = await User.findOne({ email: email.toLowerCase() });
+    if (!user) {
+      return next(createError("No account found with this email address.", 404));
+    }
+
+    // Generate reset token (valid 15 minutes)
+    const resetToken = user.getResetPasswordToken();
+    await user.save({ validateBeforeSave: false });
+
+    // In-app notification for the user
+    await Notification.create({
+      userId: user._id,
+      title: "Password Reset Requested",
+      message: "A password reset request was initiated for your account. If you did not request this, please ignore it.",
+      type: "general",
+      relatedId: user._id,
+      relatedModel: "User",
+    });
+
+    // In production, an email would be dispatched.
+    // Log the token for dev/testing and return in payload for easy workflow integration.
+    console.log(`[AUTH] Password reset requested for ${user.email}. Token: ${resetToken}`);
+
+    return sendSuccess(res, 200, "Password reset instructions sent. Token valid for 15 minutes.", {
+      message: "Password reset instructions sent. Token valid for 15 minutes.",
+      resetToken,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /api/auth/reset-password/:token  (public)
+// ─────────────────────────────────────────────────────────────────────────────
+export const resetPassword = async (req, res, next) => {
+  try {
+    const { password } = req.body;
+    if (!password || password.length < 6) {
+      return next(createError("Password is required and must be at least 6 characters.", 400));
+    }
+
+    // Hash the raw token parameter to match against database
+    const resetPasswordToken = crypto
+      .createHash("sha256")
+      .update(req.params.token)
+      .digest("hex");
+
+    const user = await User.findOne({
+      resetPasswordToken,
+      resetPasswordExpire: { $gt: Date.now() },
+    }).select("+resetPasswordToken +resetPasswordExpire");
+
+    if (!user) {
+      return next(createError("Invalid or expired password reset token.", 400));
+    }
+
+    // Set new password (pre-save hook will hash it) and clear reset fields
+    user.passwordHash = password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save();
+
+    // In-app confirmation notification
+    await Notification.create({
+      userId: user._id,
+      title: "Password Reset Successful",
+      message: "Your password has been successfully reset. You can now log in with your new password.",
+      type: "general",
+      relatedId: user._id,
+      relatedModel: "User",
+    });
+
+    const token = signToken(user);
+
+    return sendSuccess(res, 200, "Password reset successful.", {
+      token,
+      user: sanitizeUser(user),
+    });
   } catch (err) {
     next(err);
   }

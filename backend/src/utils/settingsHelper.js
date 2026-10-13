@@ -102,3 +102,16 @@ export async function getReservationHoldDays() {
   const parsed = parseInt(raw, 10);
   return Number.isFinite(parsed) && parsed > 0 ? parsed : 3;
 }
+
+/**
+ * Convenience: retrieve membership validity duration in days.
+ * Reads key: membership_duration_days (default 365).
+ *
+ * @returns {Promise<number>}
+ */
+export async function getMembershipDurationDays() {
+  const raw = await getSetting("membership_duration_days", 365);
+  const parsed = parseInt(raw, 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 365;
+}
+

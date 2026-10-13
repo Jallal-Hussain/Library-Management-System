@@ -6,6 +6,8 @@ import {
   getMe,
   logout,
   changePassword,
+  forgotPassword,
+  resetPassword,
 } from "../controllers/auth.controller.js";
 import { protect } from "../middleware/auth.js";
 import validate from "../middleware/validate.js";
@@ -67,11 +69,27 @@ const changePasswordRules = [
     }),
 ];
 
+const forgotPasswordRules = [
+  body("email")
+    .trim()
+    .notEmpty().withMessage("Email is required")
+    .isEmail().withMessage("Please provide a valid email")
+    .normalizeEmail(),
+];
+
+const resetPasswordRules = [
+  body("password")
+    .notEmpty().withMessage("Password is required")
+    .isLength({ min: 6 }).withMessage("Password must be at least 6 characters"),
+];
+
 // ── Routes ────────────────────────────────────────────────────────────────────
 
 // Public
-router.post("/register", registerRules, validate, register);
-router.post("/login",    loginRules,    validate, login);
+router.post("/register",              registerRules,       validate, register);
+router.post("/login",                 loginRules,          validate, login);
+router.post("/forgot-password",       forgotPasswordRules, validate, forgotPassword);
+router.post("/reset-password/:token", resetPasswordRules,  validate, resetPassword);
 
 // Protected
 router.get ("/me",              protect, getMe);

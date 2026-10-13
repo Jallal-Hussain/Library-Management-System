@@ -1,4 +1,6 @@
 import User from "../models/User.js";
+import Notification from "../models/Notification.js";
+import { getMembershipDurationDays } from "../utils/settingsHelper.js";
 import { sendSuccess, createError } from "../utils/apiResponse.js";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -83,6 +85,8 @@ export const createUser = async (req, res, next) => {
       return next(createError("An account with this email already exists.", 409));
     }
 
+    const isApproved = (approvalStatus || "approved") === "approved";
+
     const user = new User({
       name,
       email,
@@ -92,11 +96,16 @@ export const createUser = async (req, res, next) => {
       address,
       borrowingLimit,
       branchId,
-      isActive: isActive !== undefined ? isActive : true,
+      isActive: isActive !== undefined ? isActive : isApproved,
       approvalStatus: approvalStatus || "approved",
     });
 
     user.membershipId = user.generateMembershipId();
+
+    if (isApproved && !user.membershipExpiry) {
+      const durationDays = await getMembershipDurationDays();
+      user.membershipExpiry = new Date(Date.now() + durationDays * 24 * 60 * 60 * 1000);
+    }
 
     await user.save();
 
@@ -124,10 +133,7 @@ export const updateUser = async (req, res, next) => {
       }
     }
 
-    const UPDATABLE_FIELDS = [
-      "name", "email", "role", "phone", "address", "borrowingLimit", 
-      "isActive", "approvalStatus", "branchId"
-    ];
+    const previouslyApproved = user.approvalStatus === "approved";
 
     UPDATABLE_FIELDS.forEach((field) => {
       if (req.body[field] !== undefined) {
@@ -139,12 +145,37 @@ export const updateUser = async (req, res, next) => {
        user.passwordHash = req.body.password;
     }
 
-    // If changing role and membershipId needs regenerating, we might do it, 
-    // but usually membership ID stays consistent. We'll leave it as is unless explicitly requested.
+    // ── Phase 5.1: Admin approval loop ───────────────────────────────────────
+    let approvalNoticeNeeded = false;
+    if (user.approvalStatus === "approved" && !previouslyApproved) {
+      // 1. Automatically ensure isActive: true
+      user.isActive = true;
 
-    // If approved, ensure isActive is true automatically? We'll let the frontend handle the exact state.
+      // 2. Set membershipExpiry = Date.now() + 1 year (or setting value)
+      const durationDays = await getMembershipDurationDays();
+      user.membershipExpiry = new Date(Date.now() + durationDays * 24 * 60 * 60 * 1000);
+
+      // Ensure membershipId exists
+      if (!user.membershipId) {
+        user.membershipId = user.generateMembershipId();
+      }
+
+      approvalNoticeNeeded = true;
+    }
 
     await user.save();
+
+    // 3. Generate system notification for approved user
+    if (approvalNoticeNeeded) {
+      await Notification.create({
+        userId: user._id,
+        title: "Membership Approved",
+        message: `Your library membership has been approved! Your member ID is ${user.membershipId}.`,
+        type: "approval",
+        relatedId: user._id,
+        relatedModel: "User",
+      });
+    }
 
     const userObj = user.toObject();
     delete userObj.passwordHash;

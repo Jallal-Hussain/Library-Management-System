@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 
 const userSchema = new mongoose.Schema(
   {
@@ -78,6 +79,14 @@ const userSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Branch",
     },
+    resetPasswordToken: {
+      type: String,
+      select: false,
+    },
+    resetPasswordExpire: {
+      type: Date,
+      select: false,
+    },
   },
   {
     timestamps: true,
@@ -91,6 +100,7 @@ userSchema.index({ role: 1 });
 userSchema.index({ approvalStatus: 1 });
 userSchema.index({ isActive: 1 });
 userSchema.index({ membershipExpiry: 1 });
+userSchema.index({ resetPasswordToken: 1 }, { sparse: true });
 
 // ── Pre-save Hook: hash password only when modified ───────────────────────────
 userSchema.pre("save", async function (next) {
@@ -111,6 +121,23 @@ userSchema.methods.generateMembershipId = function () {
     this.role === "admin" ? "ADM" : this.role === "librarian" ? "LIB" : "PAT";
   const suffix = String(Date.now()).slice(-6);
   return `${prefix}${suffix}`;
+};
+
+// ── Instance Method: generate and hash password reset token ───────────────────
+userSchema.methods.getResetPasswordToken = function () {
+  // Generate random 32-byte hex token
+  const resetToken = crypto.randomBytes(32).toString("hex");
+
+  // Hash token (SHA-256) and set to resetPasswordToken field
+  this.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  // Set expiration to 15 minutes from now
+  this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
+
+  return resetToken;
 };
 
 export default mongoose.model("User", userSchema);
