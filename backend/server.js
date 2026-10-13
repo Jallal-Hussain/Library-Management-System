@@ -2,6 +2,7 @@ import "dotenv/config"; // must be first — loads .env before anything else
 
 import app from "./src/app.js";
 import connectDB from "./src/config/db.js";
+import { startAllJobs, stopAllJobs } from "./src/jobs/index.js";
 
 const PORT = process.env.PORT || 5000;
 
@@ -12,6 +13,9 @@ const PORT = process.env.PORT || 5000;
 const start = async () => {
   await connectDB();
 
+  // ── Background Cron Jobs (Phase 3) ───────────────────────────────────────────
+  const cronTasks = startAllJobs();
+
   const server = app.listen(PORT, () => {
     console.log(`🚀 Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
     console.log(`📡 API base URL: http://localhost:${PORT}/api`);
@@ -21,6 +25,7 @@ const start = async () => {
   // ── Graceful Shutdown ────────────────────────────────────────────────────────
   const shutdown = (signal) => {
     console.log(`\n⚠️  ${signal} received — shutting down gracefully...`);
+    stopAllJobs(cronTasks);
     server.close(() => {
       console.log("🔌 HTTP server closed.");
       process.exit(0);
@@ -34,13 +39,15 @@ const start = async () => {
   };
 
   process.on("SIGTERM", () => shutdown("SIGTERM"));
-  process.on("SIGINT", () => shutdown("SIGINT"));
+  process.on("SIGINT",  () => shutdown("SIGINT"));
 
   // ── Unhandled Rejections ─────────────────────────────────────────────────────
   process.on("unhandledRejection", (reason) => {
     console.error("❌ Unhandled Promise Rejection:", reason);
+    stopAllJobs(cronTasks);
     server.close(() => process.exit(1));
   });
 };
 
 start();
+

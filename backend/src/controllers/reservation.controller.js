@@ -146,13 +146,26 @@ export const cancelReservation = async (req, res, next) => {
       return next(createError("Only active reservations can be cancelled.", 400));
     }
 
-    reservation.status = "cancelled";
+    const cancelledPosition = reservation.queuePosition;
+    const bookId            = reservation.bookId;
+
+    reservation.status          = "cancelled";
     reservation.cancelledReason = req.body.reason || "User cancelled";
     await reservation.save();
 
-    // Ideally, we'd also update the queue positions of other reservations for this book.
+    // ── Phase 2.4: Re-order the queue ─────────────────────────────────────────
+    // Decrement queuePosition by 1 for every still-active reservation on this
+    // book that was behind the cancelled slot.
+    await Reservation.updateMany(
+      {
+        bookId,
+        status:        { $in: ["pending", "ready"] },
+        queuePosition: { $gt: cancelledPosition },
+      },
+      { $inc: { queuePosition: -1 } }
+    );
 
-    return sendSuccess(res, 200, "Reservation cancelled successfully.", reservation);
+    return sendSuccess(res, 200, "Reservation cancelled and queue re-ordered.", reservation);
   } catch (err) {
     next(err);
   }
