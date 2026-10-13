@@ -349,48 +349,48 @@ Currently, the backend has 0 automated tests. This phase sets up testing to guar
 
 ## 3. Implementation Phasing Checklist
 
-- [ ] **Phase 1: Orphaned Models & Missing Endpoints**
-  - [ ] FeeStructure Controller & Routes (`GET`, `POST`, `PUT`, `DELETE`)
-  - [ ] Budget Controller & Routes (`GET`, `POST`, `PUT`, `DELETE`)
-  - [ ] VendorQuote Controller & Routes (`GET`, `POST`, `PUT /status`, `DELETE`)
-  - [ ] Mount new routes in `app.js`
-- [ ] **Phase 2: Circulation, Reservation & Settings Engine**
-  - [ ] Implement `settingsHelper.js` with cached lookups
-  - [ ] Connect `borrowBook` to dynamic loan periods and user fine blocking threshold
-  - [ ] Connect `returnBook` to automatic overdue fine creation via `FeeStructure`
-  - [ ] Connect `returnBook` to `Reservation` queue check and hold reservation
-  - [ ] Re-order reservation queue positions on cancellation
-- [ ] **Phase 3: Background Automation & Cron Workers**
-  - [ ] Install `node-cron`
-  - [ ] Implement daily midnight overdue loan checker & fee accumulator
-  - [ ] Implement hourly reservation hold expiry worker
-  - [ ] Implement daily upcoming due date notification worker
-  - [ ] Initialize cron worker in `server.js`
-- [ ] **Phase 4: Reports, Analytics & Data Export**
-  - [ ] Implement circulation trends aggregation
-  - [ ] Implement popular books aggregation
-  - [ ] Implement overdue aging buckets
-  - [ ] Implement financial summary (fines collected vs unpaid, invoice payouts)
-  - [ ] Implement CSV export endpoint for books, members, and transactions
-- [ ] **Phase 5: Auth Polish & User Lifecycle**
-  - [ ] Generate `membershipId` on self-registration
-  - [ ] Add admin approval side-effects (activate account, set expiry, notify)
-  - [ ] Implement forgot password and reset password token endpoints
-- [ ] **Phase 6: Media Upload (ImageKit.io) & Security Hardening**
-  - [ ] Install `imagekit` and `multer`
-  - [ ] Configure ImageKit SDK client (`src/config/imagekit.js`) and environment variables
-  - [ ] Configure `multer` memory storage with image format/size validations
-  - [ ] Implement `POST /api/books/:id/cover` (upload to ImageKit CDN & update book record)
-  - [ ] Implement `DELETE /api/books/:id/cover` (delete from ImageKit via `deleteFile`)
-  - [ ] Add rate limiting on `/api/auth/login` and `/api/auth/register`
-  - [ ] Add missing query validations for acquisitions, invoices, vendors, ILL
-- [ ] **Phase 7: Automated Testing & Verification**
-  - [ ] Setup Vitest, Supertest, and `mongodb-memory-server`
-  - [ ] Write Auth & RBAC integration tests
-  - [ ] Write Book Catalog tests
-  - [ ] Write Circulation & Auto-Fine tests
-  - [ ] Write Reservation queue tests
-  - [ ] Verify test suite passes with 100% green status
+- [x] **Phase 1: Orphaned Models & Missing Endpoints**
+  - [x] FeeStructure Controller & Routes (`GET`, `POST`, `PUT`, `DELETE`)
+  - [x] Budget Controller & Routes (`GET`, `POST`, `PUT`, `DELETE`)
+  - [x] VendorQuote Controller & Routes (`GET`, `POST`, `PUT /status`, `DELETE`)
+  - [x] Mount new routes in `app.js`
+- [x] **Phase 2: Circulation, Reservation & Settings Engine**
+  - [x] Implement `settingsHelper.js` with cached lookups
+  - [x] Connect `borrowBook` to dynamic loan periods and user fine blocking threshold
+  - [x] Connect `returnBook` to automatic overdue fine creation via `FeeStructure`
+  - [x] Connect `returnBook` to `Reservation` queue check and hold reservation
+  - [x] Re-order reservation queue positions on cancellation
+- [x] **Phase 3: Background Automation & Cron Workers**
+  - [x] Install `node-cron`
+  - [x] Implement daily midnight overdue loan checker & fee accumulator
+  - [x] Implement hourly reservation hold expiry worker
+  - [x] Implement daily upcoming due date notification worker
+  - [x] Initialize cron worker in `server.js`
+- [x] **Phase 4: Reports, Analytics & Data Export**
+  - [x] Implement circulation trends aggregation
+  - [x] Implement popular books aggregation
+  - [x] Implement overdue aging buckets
+  - [x] Implement financial summary (fines collected vs unpaid, invoice payouts)
+  - [x] Implement CSV export endpoint for books, members, and transactions
+- [x] **Phase 5: Auth Polish & User Lifecycle**
+  - [x] Generate `membershipId` on self-registration
+  - [x] Add admin approval side-effects (activate account, set expiry, notify)
+  - [x] Implement forgot password and reset password token endpoints
+- [x] **Phase 6: Media Upload (ImageKit.io) & Security Hardening**
+  - [x] Install `imagekit` and `multer`
+  - [x] Configure ImageKit SDK client (`src/config/imagekit.js`) and environment variables
+  - [x] Configure `multer` memory storage with image format/size validations
+  - [x] Implement `POST /api/books/:id/cover` (upload to ImageKit CDN & update book record)
+  - [x] Implement `DELETE /api/books/:id/cover` (delete from ImageKit via `deleteFile`)
+  - [x] Add rate limiting on `/api/auth/login` and `/api/auth/register`
+  - [x] Add missing query validations for acquisitions, invoices, vendors, ILL
+- [x] **Phase 7: Automated Testing & Verification**
+  - [x] Setup Vitest, Supertest, and `mongodb-memory-server`
+  - [x] Write Auth & RBAC integration tests
+  - [x] Write Book Catalog tests
+  - [x] Write Circulation & Auto-Fine tests
+  - [x] Write Reservation queue tests
+  - [x] Write Fines & Payments processing tests
 
 ---
 
